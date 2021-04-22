@@ -1,0 +1,23 @@
+.MuiDrawer-paper {
+    top: 64px !important;
+    height: calc(100% - 64px) !important;
+    width: 256px;
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+
+        .MuiAvatar-root {
+            height: 58px;
+            width: 58px;
+            background-color: blueviolet;
+        }
+    }
+
+    .drawer-container {
+        padding: 0 16px;
+    }
+}

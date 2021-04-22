@@ -1,0 +1,11 @@
+.MuiAppBar-root {
+    background: rgb(86, 100, 210) !important;
+
+    .MuiToolbar-root {
+        justify-content: space-between;
+
+        .app-logo {
+            height: 56px;
+        }
+    }
+}
