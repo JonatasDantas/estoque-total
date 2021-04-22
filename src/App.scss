@@ -1,3 +1,12 @@
 body {
     margin: 0;
+    min-height: 100vh;
+    height: 100%;
+    background-color: rgb(244, 246, 248);
+}
+
+.app {
+    margin-left: 257px;
+    background-color: rgb(244, 246, 248);
+    padding: 24px;
 }

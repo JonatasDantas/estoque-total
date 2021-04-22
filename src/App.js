@@ -1,11 +1,14 @@
-import { Login } from './pages/Login';
+// import { Login } from './pages/Login';
 
 import './App.scss';
+import Routes from './pages/Routes';
 
-function App() {
-  return (
-    <Login />
-  );
-}
+const App = () => <Routes />;
+
+// function App() {
+//   return (
+//     <Login />
+//   );
+// }
 
 export default App;
