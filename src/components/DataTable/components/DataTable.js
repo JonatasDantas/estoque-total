@@ -88,6 +88,8 @@ function DataTable(props) {
           </Table>
         </TableContainer>
         <TablePagination
+          labelRowsPerPage="Linhas por página:"
+          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
