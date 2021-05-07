@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-  Card, CardActions, CardContent, Tab, Tabs, Typography,
+  Card, CardActions, CardContent, Tab, Tabs,
 } from '@material-ui/core';
 
 import SwipeableViews from 'react-swipeable-views';
@@ -11,6 +11,7 @@ import { ParticlesConfig } from './ParticlesConfig';
 
 import './LoginCard.scss';
 import LoginForm from '../LoginForm/LoginForm';
+import SignupForm from '../SignupForm/SignupForm';
 
 import Logo from '../../../../assets/img/logo.PNG';
 
@@ -39,6 +40,7 @@ function LoginCard() {
           </Tabs>
 
           <SwipeableViews
+            className="card-views"
             axis="x"
             index={tab}
             onChangeIndex={handleChangeIndex}
@@ -46,8 +48,8 @@ function LoginCard() {
             <TabPanel value={tab} index={0}>
               <LoginForm />
             </TabPanel>
-            <TabPanel value={tab} index={1}>
-              Item Two
+            <TabPanel className="tabpanel" value={tab} index={1}>
+              <SignupForm />
             </TabPanel>
           </SwipeableViews>
         </CardContent>

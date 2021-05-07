@@ -20,4 +20,10 @@
     .drawer-container {
         padding: 0 16px;
     }
+
+    @media screen and (max-width: 768px) {
+        top: 0 !important;
+        height: 100% !important;
+        width: 70%;
+    }
 }

@@ -5,14 +5,50 @@ import { useState } from 'react';
 import EnhancedTableBody from './EnhancedTableBody/EnhancedTableBody';
 import EnhancedTableHead from './EnhancedTableHead/EnhancedTableHead';
 
-function DataTable(props) {
-  const { rows, headers } = props;
+const headers = [
+  {
+    id: 'codigo', numeric: false, disablePadding: true, label: 'Código', align: 'left',
+  },
+  {
+    id: 'name', numeric: false, disablePadding: true, label: 'Descriçao do Produto', align: 'left',
+  },
+  {
+    id: 'quantityStored', numeric: true, disablePadding: false, label: 'Quantidade em Estoque', align: 'center',
+  },
+  {
+    id: 'lastSaleDate', numeric: false, disablePadding: false, label: 'Última venda', align: 'center',
+  },
+  {
+    id: 'lastUpdateDate', numeric: false, disablePadding: false, label: 'Última atualização', align: 'center',
+  },
+  {
+    id: 'actions', numeric: true, disablePadding: false, label: 'Ações', align: 'center',
+  },
+];
 
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('id');
+function DataTable(props) {
+  const {
+    rows,
+    page,
+    setPage,
+    rowsPerPage,
+    setRowsPerPage,
+    totalElements,
+    order,
+    setOrder,
+    orderBy,
+    setOrderBy,
+  } = props;
+
   const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -22,7 +58,7 @@ function DataTable(props) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id);
+      const newSelecteds = rows.map((n) => n.codigo);
       setSelected(newSelecteds);
 
       return;
@@ -50,15 +86,6 @@ function DataTable(props) {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   return (
     <div className="datatable">
       <Paper>
@@ -78,9 +105,7 @@ function DataTable(props) {
             />
             <EnhancedTableBody
               rows={rows}
-              order={order}
-              orderBy={orderBy}
-              page={page}
+              page={0}
               rowsPerPage={rowsPerPage}
               selected={selected}
               handleClick={handleClick}
@@ -92,7 +117,7 @@ function DataTable(props) {
           labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={totalElements}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

@@ -2,13 +2,12 @@
 
 import './App.scss';
 import Routes from './pages/Routes';
+import { StoreProvider } from './store';
 
-const App = () => <Routes />;
-
-// function App() {
-//   return (
-//     <Login />
-//   );
-// }
+const App = () => (
+  <StoreProvider>
+    <Routes />
+  </StoreProvider>
+);
 
 export default App;

@@ -30,9 +30,10 @@ function EnhancedTableHead(props) {
         {cells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align={headCell.align}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
+            style={{ whiteSpace: 'nowrap' }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}

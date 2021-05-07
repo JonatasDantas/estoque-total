@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useHistory } from 'react-router';
 import {
   Avatar,
   Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, Typography,
@@ -6,29 +7,39 @@ import {
 
 import './DrawerComponent.scss';
 import Itens from './DrawerItens';
-
-const drawer = (
-  <div>
-    <div className="user-info">
-      <Avatar>J</Avatar>
-      <Typography variant="h6">Jonatas de Almeida</Typography>
-      <Typography variant="body2">Web Developer</Typography>
-    </div>
-    <Divider />
-    <List className="drawer-container">
-      {Itens.map((item) => (
-        <ListItem button key={item.route}>
-          <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.name} />
-        </ListItem>
-      ))}
-    </List>
-  </div>
-);
+import StoreContext from '../../../store/StoreContext';
 
 function DrawerComponent() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const history = useHistory();
+  const { mobileOpen, setMobileOpen } = useContext(StoreContext);
+
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+  const handleRouteClick = (route) => {
+    history.replace(route);
+
+    if (mobileOpen) {
+      setMobileOpen(false);
+    }
+  };
+
+  const drawer = (
+    <div>
+      <div className="user-info">
+        <Avatar>J</Avatar>
+        <Typography variant="h6">Jonatas de Almeida</Typography>
+        <Typography variant="body2">Web Developer</Typography>
+      </div>
+      <Divider />
+      <List className="drawer-container">
+        {Itens.map((item) => (
+          <ListItem button key={item.route} onClick={() => handleRouteClick(item.route)}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.name} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
   return (
     <>

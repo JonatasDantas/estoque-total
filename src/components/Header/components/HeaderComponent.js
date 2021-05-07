@@ -1,23 +1,39 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { MobileView } from 'react-device-detect';
 import {
   AppBar, IconButton, Menu, MenuItem, Toolbar,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import './HeaderComponent.scss';
+import StoreContext from '../../../store/StoreContext';
 
 import Logo from '../../../assets/img/logo-transparente.png';
-import './HeaderComponent.scss';
 
 function HeaderComponent() {
+  const { mobileOpen, setMobileOpen } = useContext(StoreContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   return (
     <AppBar position="sticky" color="primary">
       <Toolbar>
-        <img edge="start" className="app-logo" alt="logo" src={Logo} />
+        <MobileView>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
+            edge="start"
+          >
+            <MenuIcon />
+          </IconButton>
+        </MobileView>
+        <img className="app-logo" alt="logo" src={Logo} />
 
         <div className="user-menu">
           <IconButton

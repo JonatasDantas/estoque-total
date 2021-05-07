@@ -9,9 +9,9 @@ const Itens = [
     route: '/home',
   },
   {
-    name: 'Relatório 1',
+    name: 'Produtos sem vendas',
     icon: <BarChart />,
-    route: '/relatorio-1',
+    route: '/relatorios/produtos-sem-vendas',
   },
   {
     name: 'Relatório 2',

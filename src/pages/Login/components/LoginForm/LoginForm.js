@@ -1,10 +1,22 @@
-import { Button, TextField } from '@material-ui/core';
+import {
+  Button, Collapse, IconButton, TextField,
+} from '@material-ui/core';
+import { Close } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
 import { useFormik } from 'formik';
+import { useContext, useState } from 'react';
+import { useHistory } from 'react-router';
 import * as yup from 'yup';
+import { api, setAuthorization } from '../../../../services/api';
 
+import StoreContext from '../../../../store/StoreContext';
 import './LoginForm.scss';
 
 function LoginForm() {
+  const [alertOpen, setAlertOpen] = useState(false);
+  const { setToken, setUser } = useContext(StoreContext);
+  const history = useHistory();
+
   const validationSchema = yup.object({
     email: yup
       .string('Insira o seu Email')
@@ -16,8 +28,20 @@ function LoginForm() {
       .required('Senha é obrigatória'),
   });
 
-  function handleSubmit(data) {
-    console.log(data);
+  async function handleSubmit(credentials) {
+    try {
+      const { data } = await api.post('auth/login', { ...credentials });
+
+      if (data.token && data.user) {
+        setUser(data.user);
+        setToken(data.token);
+        setAuthorization(data.token);
+
+        history.replace('/home');
+      }
+    } catch (e) {
+      setAlertOpen(true);
+    }
   }
 
   const formik = useFormik({
@@ -31,6 +55,26 @@ function LoginForm() {
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      <Collapse in={alertOpen}>
+        <Alert
+          style={{ marginBottom: 20 }}
+          severity="error"
+          action={(
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setAlertOpen(false);
+              }}
+            >
+              <Close fontSize="inherit" />
+            </IconButton>
+          )}
+        >
+          Erro no Login! Por favor, revise seus dados.
+        </Alert>
+      </Collapse>
       <TextField
         fullWidth
         id="email"
@@ -57,7 +101,7 @@ function LoginForm() {
         helperText={formik.touched.password && formik.errors.password}
       />
       <div className="button-group">
-        <Button color="#56ccf2" variant="contained" size="large" type="submit">
+        <Button variant="contained" size="large" type="submit">
           Entrar
         </Button>
       </div>

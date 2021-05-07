@@ -3,12 +3,12 @@
 
     .login-card {
         position: absolute;
-        top: 25%;
+        top: 15%;
         left: 0;
         right: 0;
         margin-left: auto;
         margin-right: auto;
-        width: 420px;
+        width: 460px;
 
         .app-logo {
             display: flex;
@@ -19,9 +19,21 @@
             }
         }
 
+        .card-views {
+            .tabpanel {
+                .MuiBox-root {
+                    padding: 24px 10px;
+                }
+            }
+        }
+
         .MuiCardActions-root {
             background-color: #cccccc;
             justify-content: center;
+        }
+
+        @media screen and (max-width: 768px) {
+            width: 90vw;
         }
     }
 
