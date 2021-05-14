@@ -13,7 +13,9 @@ function EnhancedTableHead(props) {
     onRequestSort,
   } = props;
   const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
+    if (property !== 'actions') {
+      onRequestSort(event, property);
+    }
   };
 
   return (

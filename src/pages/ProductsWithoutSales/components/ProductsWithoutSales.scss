@@ -1,0 +1,18 @@
+.search-container {
+    margin-bottom: 20px;
+
+    .report-form {
+        .MuiFormControl-root {
+            margin: 10px;
+        }
+
+        .select-control {
+            min-width: 15%;
+
+            .MuiInputLabel-formControl {
+                top: -8px;
+                left: 14px;
+            }
+        }
+    }
+}

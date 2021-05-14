@@ -16,6 +16,9 @@ body {
             padding: 15px;
         }
     
+        .MuiCardContent-root:last-child {
+            padding-bottom: 16px;
+        }
     }
 
     form {
@@ -27,6 +30,11 @@ body {
                 background-color: #56ccf2 !important;
                 color: #FFFFFF;
                 border-radius: 20px;
+            }
+
+            &.end {
+                justify-content: flex-end;
+                margin-top: 0;
             }
         }
     }

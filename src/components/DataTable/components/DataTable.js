@@ -1,4 +1,10 @@
 import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Paper, Table, TableContainer, TablePagination,
 } from '@material-ui/core';
 import { useState } from 'react';
@@ -38,9 +44,13 @@ function DataTable(props) {
     setOrder,
     orderBy,
     setOrderBy,
+    handleUpdateItem,
+    loading,
   } = props;
 
   const [selected, setSelected] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [itemToUpdate, setItemToUpdate] = useState(null);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -86,8 +96,40 @@ function DataTable(props) {
     setSelected(newSelected);
   };
 
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleUpdatedClick = (product) => {
+    setItemToUpdate(product);
+    setOpenDialog(true);
+  };
+
   return (
     <div className="datatable">
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Marcar produto como Atualizado ?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza que deseja marcar o produto como atualizado?
+            Será sobrescrito na próxima importação.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={() => { handleUpdateItem(itemToUpdate); handleCloseDialog(); }} color="primary" autoFocus>
+            Enviar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Paper>
         <TableContainer>
           <Table
@@ -109,6 +151,8 @@ function DataTable(props) {
               rowsPerPage={rowsPerPage}
               selected={selected}
               handleClick={handleClick}
+              handleUpdatedClick={handleUpdatedClick}
+              loading={loading}
             />
           </Table>
         </TableContainer>

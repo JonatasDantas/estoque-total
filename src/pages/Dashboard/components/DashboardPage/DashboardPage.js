@@ -1,8 +1,3 @@
-import {
-  Card, CardContent, InputAdornment, TextField,
-} from '@material-ui/core';
-import { Search } from '@material-ui/icons';
-import DataTable from '../../../../components/DataTable/components/DataTable';
 import './DashboardPage.scss';
 
 // function createData(id, name, quantity, price, quantitySells) {
