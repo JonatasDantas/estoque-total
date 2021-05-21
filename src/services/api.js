@@ -5,7 +5,7 @@ function getLocalToken() {
 }
 
 export const api = axios.create({
-  baseURL: 'http://estoque-total-api.herokuapp.com',
+  baseURL: 'https://estoque-total-api.herokuapp.com',
   headers: {
     authorization: `Bearer ${getLocalToken()}`,
   },
