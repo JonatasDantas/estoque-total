@@ -36,6 +36,11 @@ function ProductsWithoutSales() {
         },
       });
 
+      if (filtersChanged) {
+        setFiltersChanged(false);
+        setPage(0);
+      }
+
       setTotalElements(data.totalElements);
       setRows(data.content);
       setLoading(false);
