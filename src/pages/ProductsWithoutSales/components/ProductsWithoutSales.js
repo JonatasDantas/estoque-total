@@ -8,6 +8,7 @@ import DataTable from '../../../components/DataTable/components/DataTable';
 import { api } from '../../../services/api';
 
 import './ProductsWithoutSales.scss';
+import useDidMountEffect from '../../../utils/useDidMountEffect';
 
 function ProductsWithoutSales() {
   const [rows, setRows] = useState([]);
@@ -61,7 +62,7 @@ function ProductsWithoutSales() {
     }
   };
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     setFiltersChanged(true);
   }, [nameQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery]);
 
