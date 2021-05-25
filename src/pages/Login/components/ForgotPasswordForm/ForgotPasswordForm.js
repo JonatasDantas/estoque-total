@@ -1,57 +1,40 @@
+import { useState } from 'react';
 import {
   Button, Collapse, IconButton, TextField,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { useFormik } from 'formik';
-import { useContext, useState } from 'react';
-import { useHistory } from 'react-router';
 import * as yup from 'yup';
-import { api, setAuthorization } from '../../../../services/api';
+import { api } from '../../../../services/api';
 
-import StoreContext from '../../../../store/StoreContext';
-import './LoginForm.scss';
-
-function LoginForm() {
+function ForgotPasswordForm() {
   const [alertOpen, setAlertOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { setToken, setUser } = useContext(StoreContext);
-  const history = useHistory();
+  const [alertMessage, setalertMessage] = useState('');
 
   const validationSchema = yup.object({
     email: yup
       .string('Insira o seu Email')
       .email('Email inválido')
       .required('Email é obrigatório'),
-    password: yup
-      .string('Insira sua senha')
-      .min(8, 'Senha deve ter no mínimo 8 caractéres')
-      .required('Senha é obrigatória'),
   });
 
   async function handleSubmit(credentials) {
     try {
-      setIsLoading(true);
-      const { data } = await api.post('auth/login', { ...credentials });
+      const { data } = await api.post('auth/reset-password', { ...credentials });
 
-      if (data.token && data.user) {
-        setUser(data.user);
-        setToken(data.token);
-        setAuthorization(data.token);
-        setIsLoading(false);
-
-        history.replace('/home');
-      }
-    } catch (e) {
+      console.log(data);
+      setalertMessage('Email para recuperação de senha enviado!');
       setAlertOpen(true);
-      setIsLoading(false);
+    } catch (err) {
+      setalertMessage(err.message ? err.message : 'Email não encontrado!');
+      setAlertOpen(true);
     }
   }
 
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     validationSchema,
     onSubmit: (values) => handleSubmit(values),
@@ -62,7 +45,7 @@ function LoginForm() {
       <Collapse in={alertOpen}>
         <Alert
           style={{ marginBottom: 20 }}
-          severity="error"
+          severity={alertMessage === 'Email para recuperação de senha enviado!' ? 'success' : 'error'}
           action={(
             <IconButton
               aria-label="close"
@@ -76,7 +59,7 @@ function LoginForm() {
             </IconButton>
           )}
         >
-          Erro no Login! Por favor, revise seus dados.
+          {alertMessage}
         </Alert>
       </Collapse>
       <TextField
@@ -91,26 +74,13 @@ function LoginForm() {
         error={formik.touched.email && Boolean(formik.errors.email)}
         helperText={formik.touched.email && formik.errors.email}
       />
-      <TextField
-        fullWidth
-        id="password"
-        name="password"
-        label="Senha"
-        type="password"
-        variant="outlined"
-        size="small"
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
-      />
+
       <div className="button-group">
-        <Button variant="contained" size="large" type="submit" disabled={isLoading}>
-          Entrar
+        <Button variant="contained" size="large" type="submit">
+          Recuperar
         </Button>
       </div>
     </form>
   );
 }
-
-export default LoginForm;
+export default ForgotPasswordForm;

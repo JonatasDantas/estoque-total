@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react';
 import {
   Button,
-  Card, CardContent, Dialog, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField,
+  Card,
+  CardContent,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import DataTable from '../../../components/DataTable/components/DataTable';
@@ -21,6 +30,7 @@ function ProductsWithoutSales() {
   const [daysWithoutSaleQuery, setDaysWithoutSaleQuery] = useState(7);
   const [daysWithoutUpdateQuery, setDaysWithoutUpdateQuery] = useState(14);
   const [nameQuery, setNameQuery] = useState('');
+  const [noSales, setNoSales] = useState(false);
   const [filtersChanged, setFiltersChanged] = useState(false);
 
   const fetchData = async () => {
@@ -34,6 +44,7 @@ function ProductsWithoutSales() {
           name: nameQuery,
           daysWithoutSale: daysWithoutSaleQuery,
           daysWithoutUpdate: daysWithoutUpdateQuery,
+          noSales,
         },
       });
 
@@ -64,7 +75,7 @@ function ProductsWithoutSales() {
 
   useDidMountEffect(() => {
     setFiltersChanged(true);
-  }, [nameQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery]);
+  }, [nameQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery, noSales]);
 
   useEffect(() => {
     fetchData();
@@ -73,7 +84,7 @@ function ProductsWithoutSales() {
   const renderMenuItens = () => {
     const itens = [];
 
-    for (let index = 1; index <= 30; index++) {
+    for (let index = 0; index <= 30; index++) {
       itens.push(<MenuItem value={index}>{index}</MenuItem>);
     }
 
@@ -131,6 +142,11 @@ function ProductsWithoutSales() {
                 {renderMenuItens()}
               </Select>
             </FormControl>
+
+            <FormControlLabel
+              control={<Checkbox checked={noSales} onChange={(e) => setNoSales(e.target.checked)} name="checkedA" />}
+              label="Produtos Sem venda"
+            />
 
             <div className="button-group end">
               <Button variant="contained" size="large" type="submit">

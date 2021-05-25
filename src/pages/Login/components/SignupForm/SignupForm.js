@@ -23,6 +23,7 @@ import { api } from '../../../../services/api';
 
 function SignupForm() {
   const [alertOpen, setAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [alertMessage, setalertMessage] = useState('');
 
   const validationSchema = yup.object({
@@ -51,15 +52,18 @@ function SignupForm() {
 
   async function handleSubmit(userData) {
     try {
+      setIsLoading(true);
       const { data } = await api.post('auth/signup', { ...userData });
 
       if (data.id) {
         setalertMessage('Usuário criado com sucesso! Prossiga para o login');
         setAlertOpen(true);
+        setIsLoading(false);
       }
     } catch (err) {
-      setalertMessage(err.message ? err.message : 'Erro no cadastro! Por favor, tente novamente');
+      setalertMessage(err.response.data ? err.response.data : 'Erro no cadastro! Por favor, tente novamente');
       setAlertOpen(true);
+      setIsLoading(false);
     }
   }
 
@@ -193,7 +197,7 @@ function SignupForm() {
       </div>
 
       <div className="button-group">
-        <Button variant="contained" size="large" type="submit">
+        <Button variant="contained" size="large" type="submit" disabled={isLoading}>
           Cadastrar
         </Button>
       </div>

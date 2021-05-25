@@ -7,9 +7,11 @@ import { Drawer } from '../components/Drawer';
 
 import { Dashboard } from './Dashboard';
 import { ProductsWithoutSales } from './ProductsWithoutSales';
+import { SecurityStock } from './SecurityStock';
 import { Login } from './Login';
 
 import { StoreContext } from '../store';
+import { ChangePassword } from './ChangePassword';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { token } = useContext(StoreContext);
@@ -40,8 +42,10 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={() => <Login />} />
+      <Route path="/trocar-minha-senha" component={() => <ChangePassword />} />
       <PrivateRoute path="/home" component={() => <Dashboard />} />
       <PrivateRoute path="/relatorios/produtos-sem-vendas" component={() => <ProductsWithoutSales />} />
+      <PrivateRoute path="/relatorios/estoque-de-segunca" component={() => <SecurityStock />} />
       <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>

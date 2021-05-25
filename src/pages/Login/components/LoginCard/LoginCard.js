@@ -14,6 +14,7 @@ import LoginForm from '../LoginForm/LoginForm';
 import SignupForm from '../SignupForm/SignupForm';
 
 import Logo from '../../../../assets/img/logo.PNG';
+import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
 
 function LoginCard() {
   const [tab, setTab] = useState(0);
@@ -51,10 +52,13 @@ function LoginCard() {
             <TabPanel className="tabpanel" value={tab} index={1}>
               <SignupForm />
             </TabPanel>
+            <TabPanel value={tab} index={2}>
+              <ForgotPasswordForm />
+            </TabPanel>
           </SwipeableViews>
         </CardContent>
         <CardActions>
-          <Button size="small">Esqueceu sua senha?</Button>
+          <Button onClick={() => setTab(2)} size="small">Esqueceu sua senha?</Button>
         </CardActions>
       </Card>
       <Particles params={ParticlesConfig} />

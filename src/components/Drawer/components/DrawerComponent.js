@@ -11,7 +11,7 @@ import StoreContext from '../../../store/StoreContext';
 
 function DrawerComponent() {
   const history = useHistory();
-  const { mobileOpen, setMobileOpen } = useContext(StoreContext);
+  const { mobileOpen, setMobileOpen, user } = useContext(StoreContext);
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
   const handleRouteClick = (route) => {
@@ -25,9 +25,9 @@ function DrawerComponent() {
   const drawer = (
     <div>
       <div className="user-info">
-        <Avatar>J</Avatar>
-        <Typography variant="h6">Jonatas de Almeida</Typography>
-        <Typography variant="body2">Web Developer</Typography>
+        <Avatar>{user.name.charAt(0)}</Avatar>
+        <Typography variant="h6">{user.name}</Typography>
+        <Typography variant="body2">{user.role && user.role.find((e) => e.authority === 'ROLE_ADMIN') ? 'Administrador(a)' : 'Usuário'}</Typography>
       </div>
       <Divider />
       <List className="drawer-container">
