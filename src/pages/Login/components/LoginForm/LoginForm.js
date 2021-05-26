@@ -25,7 +25,6 @@ function LoginForm() {
       .required('Email é obrigatório'),
     password: yup
       .string('Insira sua senha')
-      .min(8, 'Senha deve ter no mínimo 8 caractéres')
       .required('Senha é obrigatória'),
   });
 

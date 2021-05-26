@@ -2,18 +2,23 @@ import { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import {
   Avatar,
-  Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, Typography,
+  Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography,
 } from '@material-ui/core';
 
 import './DrawerComponent.scss';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import Itens from './DrawerItens';
 import StoreContext from '../../../store/StoreContext';
 
 function DrawerComponent() {
   const history = useHistory();
-  const { mobileOpen, setMobileOpen, user } = useContext(StoreContext);
+  const {
+    mobileOpen, setMobileOpen, webOpen, setWebOpen, user,
+  } = useContext(StoreContext);
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+  const handleWebDrawerToggle = () => setWebOpen(!webOpen);
+
   const handleRouteClick = (route) => {
     history.replace(route);
 
@@ -26,15 +31,15 @@ function DrawerComponent() {
     <div>
       <div className="user-info">
         <Avatar>{user.name.charAt(0)}</Avatar>
-        <Typography variant="h6">{user.name}</Typography>
-        <Typography variant="body2">{user.role && user.role.find((e) => e.authority === 'ROLE_ADMIN') ? 'Administrador(a)' : 'Usuário'}</Typography>
+        <Typography className="username" variant="h6">{(webOpen || mobileOpen) && user.name}</Typography>
+        <Typography variant="body2">{user.role && (webOpen || mobileOpen) && (user.role.find((e) => e.authority === 'ROLE_ADMIN') ? 'Administrador(a)' : 'Usuário')}</Typography>
       </div>
       <Divider />
       <List className="drawer-container">
         {Itens.map((item) => (
           <ListItem button key={item.route} onClick={() => handleRouteClick(item.route)}>
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.name} />
+            <ListItemText primary={(webOpen || mobileOpen) && item.name} />
           </ListItem>
         ))}
       </List>
@@ -60,8 +65,15 @@ function DrawerComponent() {
       <Hidden xsDown implementation="css">
         <Drawer
           variant="permanent"
-          open
+          anchor="left"
+          open={webOpen}
+          className={`${!webOpen ? 'web-closed' : ''}`}
         >
+          <div style={{ display: 'flex', justifyContent: webOpen ? 'flex-end' : 'center', margin: '0 10px' }}>
+            <IconButton onClick={handleWebDrawerToggle}>
+              {webOpen ? <ChevronLeft /> : <ChevronRight />}
+            </IconButton>
+          </div>
           {drawer}
         </Drawer>
       </Hidden>

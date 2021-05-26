@@ -14,7 +14,7 @@ import { StoreContext } from '../store';
 import { ChangePassword } from './ChangePassword';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { token } = useContext(StoreContext);
+  const { token, webOpen } = useContext(StoreContext);
 
   function isAuthenticated() {
     return token;
@@ -27,7 +27,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         <>
           <Header />
           <Drawer />
-          <div className="app">
+          <div className={`app ${!webOpen ? 'drawer-web-closed' : ''}`}>
             <Component {...props} />
           </div>
         </>

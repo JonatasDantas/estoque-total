@@ -8,6 +8,10 @@
 
         .select-control {
             min-width: 15%;
+            
+            @media screen and (max-width: 768px) {
+                min-width: 40%;
+            }
 
             .MuiInputLabel-formControl {
                 top: -8px;

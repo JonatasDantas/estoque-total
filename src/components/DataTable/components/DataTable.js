@@ -50,7 +50,7 @@ function DataTable(props) {
 
   const [selected, setSelected] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [itemToUpdate, setItemToUpdate] = useState(null);
+  const [itensToUpdate, setItensToUpdate] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -68,7 +68,7 @@ function DataTable(props) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.codigo);
+      const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
 
       return;
@@ -100,75 +100,93 @@ function DataTable(props) {
     setOpenDialog(false);
   };
 
-  const handleUpdatedClick = (product) => {
-    setItemToUpdate(product);
+  const handleUpdatedClick = (products) => {
+    setItensToUpdate(products);
     setOpenDialog(true);
   };
 
   return (
-    <div className="datatable">
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Marcar produto como Atualizado ?</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Tem certeza que deseja marcar o produto como atualizado?
-            Será sobrescrito na próxima importação.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={() => { handleUpdateItem(itemToUpdate); handleCloseDialog(); }} color="primary" autoFocus>
-            Enviar
-          </Button>
-        </DialogActions>
-      </Dialog>
+    <>
+      <div className="button-group end" style={{ marginBottom: 10, display: selected.length === 0 ? 'none' : '' }}>
+        <Button variant="contained" onClick={(e) => { e.preventDefault(); handleUpdatedClick(selected); }}>
+          Atualizar Selecionados
+        </Button>
+      </div>
 
-      <Paper>
-        <TableContainer>
-          <Table
-            aria-labelledby="tableTitle"
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              cells={headers}
-              onSelectAllClick={handleSelectAllClick}
-              order={order}
-              orderBy={orderBy}
-              numSelected={selected.length}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <EnhancedTableBody
-              rows={rows}
-              page={0}
-              rowsPerPage={rowsPerPage}
-              selected={selected}
-              handleClick={handleClick}
-              handleUpdatedClick={handleUpdatedClick}
-              loading={loading}
-            />
-          </Table>
-        </TableContainer>
-        <TablePagination
-          labelRowsPerPage="Linhas por página:"
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={totalElements}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </div>
+      <div className="datatable">
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Marcar produto(s) como Atualizado(s) ?</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Tem certeza que deseja marcar o(s) produto(s) como atualizado(s)?
+              Será sobrescrito na próxima importação.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              Cancelar
+            </Button>
+            <Button
+              onClick={() => {
+                handleUpdateItem(itensToUpdate);
+                if (itensToUpdate.length > 1) {
+                  setSelected([]);
+                }
+                handleCloseDialog();
+              }}
+              color="primary"
+              autoFocus
+            >
+              Enviar
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Paper>
+          <TableContainer>
+            <Table
+              aria-labelledby="tableTitle"
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                cells={headers}
+                onSelectAllClick={handleSelectAllClick}
+                order={order}
+                orderBy={orderBy}
+                numSelected={selected.length}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <EnhancedTableBody
+                rows={rows}
+                page={0}
+                rowsPerPage={rowsPerPage}
+                selected={selected}
+                handleClick={handleClick}
+                handleUpdatedClick={handleUpdatedClick}
+                loading={loading}
+              />
+            </Table>
+          </TableContainer>
+          <TablePagination
+            labelRowsPerPage="Linhas por página:"
+            labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={totalElements}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </div>
+    </>
   );
 }
 

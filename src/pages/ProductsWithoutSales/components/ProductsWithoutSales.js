@@ -61,15 +61,18 @@ function ProductsWithoutSales() {
     }
   };
 
-  const updateItem = async (product) => {
+  const updateItem = async (products) => {
     try {
       setLoading(true);
-      const { data } = await api.post(`bling-products/${product.id}/markAsUpdated`);
+      const { data } = await api.post('bling-products/markAsUpdated', {
+        ids: products,
+      });
 
       console.log(data);
-      fetchData();
     } catch (err) {
       console.log(err);
+    } finally {
+      fetchData();
     }
   };
 
@@ -156,6 +159,7 @@ function ProductsWithoutSales() {
           </form>
         </CardContent>
       </Card>
+
       <DataTable
         rows={rows}
         page={page}

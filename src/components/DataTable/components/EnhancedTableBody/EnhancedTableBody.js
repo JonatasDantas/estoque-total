@@ -11,7 +11,7 @@ function EnhancedTableBody(props) {
     rows, page, rowsPerPage, selected, handleClick, handleUpdatedClick, loading,
   } = props;
 
-  const isSelected = (codigo) => selected.indexOf(codigo) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
   return (
     <TableBody>
       { loading
@@ -23,7 +23,7 @@ function EnhancedTableBody(props) {
         : rows
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row, index) => {
-            const isItemSelected = isSelected(row.codigo);
+            const isItemSelected = isSelected(row.id);
             const labelId = `enhanced-table-checkbox-${index}`;
 
             return (
@@ -35,7 +35,7 @@ function EnhancedTableBody(props) {
                 key={row.codigo}
                 selected={isItemSelected}
               >
-                <TableCell onClick={(event) => handleClick(event, row.codigo)} padding="checkbox">
+                <TableCell onClick={(event) => handleClick(event, row.id)} padding="checkbox">
                   <Checkbox
                     checked={isItemSelected}
                     inputProps={{ 'aria-labelledby': labelId }}
@@ -45,12 +45,12 @@ function EnhancedTableBody(props) {
                   align="left"
                   padding="none"
                   style={{ whiteSpace: 'nowrap' }}
-                  onClick={(event) => handleClick(event, row.codigo)}
+                  onClick={(event) => handleClick(event, row.id)}
                 >
                   {row.codigo}
                 </TableCell>
                 <TableCell
-                  onClick={(event) => handleClick(event, row.codigo)}
+                  onClick={(event) => handleClick(event, row.id)}
                   align="left"
                   style={{ whiteSpace: 'nowrap' }}
                 >
@@ -59,7 +59,7 @@ function EnhancedTableBody(props) {
                 <TableCell
                   align="center"
                   padding="none"
-                  onClick={(event) => handleClick(event, row.codigo)}
+                  onClick={(event) => handleClick(event, row.id)}
                 >
                   {row.quantityStored}
                 </TableCell>
@@ -67,7 +67,7 @@ function EnhancedTableBody(props) {
                   align="center"
                   padding="none"
                   style={{ whiteSpace: 'nowrap' }}
-                  onClick={(event) => handleClick(event, row.codigo)}
+                  onClick={(event) => handleClick(event, row.id)}
                 >
                   {row.lastSaleDate ? new Date(row.lastSaleDate).toLocaleDateString() : ''}
                 </TableCell>
@@ -75,13 +75,13 @@ function EnhancedTableBody(props) {
                   align="center"
                   padding="none"
                   style={{ whiteSpace: 'nowrap' }}
-                  onClick={(event) => handleClick(event, row.codigo)}
+                  onClick={(event) => handleClick(event, row.id)}
                 >
                   {row.lastUpdateDate ? new Date(row.lastUpdateDate).toLocaleDateString() : ''}
                 </TableCell>
                 <TableCell align="center" padding="none">
                   <div className="actions">
-                    <IconButton onClick={() => handleUpdatedClick(row)} size="small">
+                    <IconButton onClick={() => handleUpdatedClick([row.id])} size="small">
                       <CheckCircleRounded alt="Marcar como Editado" style={{ color: green[500], cursor: 'pointer' }} />
                     </IconButton>
                     <IconButton size="small">
