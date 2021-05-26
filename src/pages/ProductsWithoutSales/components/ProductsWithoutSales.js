@@ -30,6 +30,7 @@ function ProductsWithoutSales() {
   const [daysWithoutSaleQuery, setDaysWithoutSaleQuery] = useState(7);
   const [daysWithoutUpdateQuery, setDaysWithoutUpdateQuery] = useState(14);
   const [nameQuery, setNameQuery] = useState('');
+  const [codeQuery, setCodeQuery] = useState('');
   const [noSales, setNoSales] = useState(false);
   const [filtersChanged, setFiltersChanged] = useState(false);
 
@@ -41,6 +42,7 @@ function ProductsWithoutSales() {
           size: rowsPerPage,
           page: filtersChanged ? 0 : page,
           sort: `${orderBy},${order}`,
+          code: codeQuery,
           name: nameQuery,
           daysWithoutSale: daysWithoutSaleQuery,
           daysWithoutUpdate: daysWithoutUpdateQuery,
@@ -99,6 +101,21 @@ function ProductsWithoutSales() {
       <Card className="search-container">
         <CardContent>
           <form className="report-form" onSubmit={(e) => { e.preventDefault(); fetchData(); }}>
+            <TextField
+              placeholder="Codigo"
+              variant="outlined"
+              size="small"
+              value={codeQuery}
+              onChange={(e) => setCodeQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
             <TextField
               placeholder="Descrição do produto"
               variant="outlined"
