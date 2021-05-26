@@ -3,7 +3,7 @@ import { createContext } from 'react';
 const StoreContext = createContext({
   mobileOpen: false,
   setMobileOpen: () => {},
-  webOpen: false,
+  webOpen: true,
   setWebOpen: () => {},
   token: null,
   setToken: () => {},
