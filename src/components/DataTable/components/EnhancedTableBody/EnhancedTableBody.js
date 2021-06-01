@@ -3,7 +3,7 @@ import {
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import {
-  CheckCircleRounded, Edit, HighlightOff,
+  CheckCircleRounded, Edit,
 } from '@material-ui/icons';
 
 function EnhancedTableBody(props) {

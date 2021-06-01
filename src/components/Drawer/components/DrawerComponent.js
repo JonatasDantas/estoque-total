@@ -1,8 +1,16 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router';
 import {
   Avatar,
-  Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
 } from '@material-ui/core';
 
 import './DrawerComponent.scss';
