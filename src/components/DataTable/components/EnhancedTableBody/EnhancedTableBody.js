@@ -41,7 +41,23 @@ function EnhancedTableBody(props) {
                     inputProps={{ 'aria-labelledby': labelId }}
                   />
                 </TableCell>
-                <TableCell
+                {
+                  Object.keys(row).filter((key) => key !== 'id').map((key) => (
+                    <TableCell
+                      key={key}
+                      align={['codigo', 'name', 'supplierName'].indexOf(key) !== -1 ? 'left' : 'center'}
+                      padding={['name', 'supplierName'].indexOf(key) !== -1 ? 'default' : 'none'}
+                      style={{ whiteSpace: 'nowrap' }}
+                      onClick={(event) => handleClick(event, row.id)}
+                    >
+                      {
+                        key.indexOf('Date') !== -1 ? new Date(row[key]).toLocaleDateString() : row[key]
+                      }
+                    </TableCell>
+                  ))
+                }
+
+                {/* <TableCell
                   align="left"
                   padding="none"
                   style={{ whiteSpace: 'nowrap' }}
@@ -78,7 +94,7 @@ function EnhancedTableBody(props) {
                   onClick={(event) => handleClick(event, row.id)}
                 >
                   {row.lastUpdateDate ? new Date(row.lastUpdateDate).toLocaleDateString() : ''}
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="center" padding="none">
                   <div className="actions">
                     <IconButton onClick={() => handleUpdatedClick([row.id])} size="small">

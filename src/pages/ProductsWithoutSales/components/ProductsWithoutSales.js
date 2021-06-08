@@ -19,6 +19,27 @@ import { api } from '../../../services/api';
 import './ProductsWithoutSales.scss';
 import useDidMountEffect from '../../../utils/useDidMountEffect';
 
+const headers = [
+  {
+    id: 'codigo', numeric: false, disablePadding: true, label: 'Código', align: 'left',
+  },
+  {
+    id: 'name', numeric: false, disablePadding: true, label: 'Descriçao do Produto', align: 'left',
+  },
+  {
+    id: 'quantityStored', numeric: true, disablePadding: false, label: 'Quantidade em Estoque', align: 'center',
+  },
+  {
+    id: 'lastSaleDate', numeric: false, disablePadding: false, label: 'Última venda', align: 'center',
+  },
+  {
+    id: 'lastUpdateDate', numeric: false, disablePadding: false, label: 'Última atualização', align: 'center',
+  },
+  {
+    id: 'actions', numeric: true, disablePadding: false, label: 'Ações', align: 'center',
+  },
+];
+
 function ProductsWithoutSales() {
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
@@ -80,7 +101,7 @@ function ProductsWithoutSales() {
 
   useDidMountEffect(() => {
     setFiltersChanged(true);
-  }, [nameQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery, noSales]);
+  }, [nameQuery, codeQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery, noSales]);
 
   useEffect(() => {
     fetchData();
@@ -178,6 +199,7 @@ function ProductsWithoutSales() {
       </Card>
 
       <DataTable
+        headers={headers}
         rows={rows}
         page={page}
         setPage={setPage}

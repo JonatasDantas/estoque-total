@@ -14,6 +14,11 @@ const Itens = [
     route: '/relatorios/produtos-sem-vendas',
   },
   {
+    name: 'Estoque de Segurança',
+    icon: <Assignment />,
+    route: '/relatorios/estoque-de-segunca',
+  },
+  {
     name: 'Relatório 2',
     icon: <TrendingUp />,
     route: '/relatorio-2',
@@ -22,11 +27,6 @@ const Itens = [
     name: 'Relatório 3',
     icon: <PieChart />,
     route: '/relatorio-3',
-  },
-  {
-    name: 'Relatório 4',
-    icon: <Assignment />,
-    route: '/relatorio-4',
   },
   {
     name: 'Ajustes',

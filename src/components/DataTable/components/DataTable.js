@@ -11,29 +11,9 @@ import { useState } from 'react';
 import EnhancedTableBody from './EnhancedTableBody/EnhancedTableBody';
 import EnhancedTableHead from './EnhancedTableHead/EnhancedTableHead';
 
-const headers = [
-  {
-    id: 'codigo', numeric: false, disablePadding: true, label: 'Código', align: 'left',
-  },
-  {
-    id: 'name', numeric: false, disablePadding: true, label: 'Descriçao do Produto', align: 'left',
-  },
-  {
-    id: 'quantityStored', numeric: true, disablePadding: false, label: 'Quantidade em Estoque', align: 'center',
-  },
-  {
-    id: 'lastSaleDate', numeric: false, disablePadding: false, label: 'Última venda', align: 'center',
-  },
-  {
-    id: 'lastUpdateDate', numeric: false, disablePadding: false, label: 'Última atualização', align: 'center',
-  },
-  {
-    id: 'actions', numeric: true, disablePadding: false, label: 'Ações', align: 'center',
-  },
-];
-
 function DataTable(props) {
   const {
+    headers,
     rows,
     page,
     setPage,
