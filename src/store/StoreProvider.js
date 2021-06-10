@@ -6,7 +6,7 @@ const StoreProvider = ({ children }) => {
   const [token, setToken] = useStorage('token');
   const [user, setUser] = useStorage('user');
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [webOpen, setWebOpen] = useState(false);
+  const [webOpen, setWebOpen] = useState(true);
 
   return (
     <Context.Provider

@@ -21,7 +21,7 @@ function ForgotPasswordForm() {
 
   async function handleSubmit(credentials) {
     try {
-      const { data } = await api.post('auth/reset-password', { ...credentials });
+      const { data } = await api.post(`auth/reset-password?email=${credentials.email}`);
 
       console.log(data);
       setalertMessage('Email para recuperação de senha enviado!');

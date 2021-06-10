@@ -28,7 +28,7 @@ function ChangePasswordForm() {
     const token = urlParams.get('token');
 
     try {
-      const { data } = await api.get('reset-password/enabled', { params: { token }, timeout: 2000 });
+      const { data } = await api.get('auth/reset-password/enabled', { params: { token }, timeout: 2000 });
 
       if (!data) {
         setOpenErrorDialog(true);
@@ -52,7 +52,7 @@ function ChangePasswordForm() {
   async function handleSubmit(credentials) {
     try {
       const urlParams = new URLSearchParams(window.location.search);
-      const { data } = await api.post('reset-password/handle', { ...credentials, token: urlParams.get('token') });
+      const { data } = await api.post('auth/reset-password/handle', { ...credentials, token: urlParams.get('token') });
 
       console.log(data);
       setalertMessage('Senha alterada com sucesso! \n');
@@ -125,6 +125,7 @@ function ChangePasswordForm() {
           fullWidth
           id="password"
           name="password"
+          type="password"
           label="Senha"
           variant="outlined"
           size="small"
@@ -139,6 +140,7 @@ function ChangePasswordForm() {
           id="passwordConfirmation"
           name="passwordConfirmation"
           label="Confirmação de senha"
+          type="password"
           variant="outlined"
           size="small"
           value={formik.values.passwordConfirmation}
