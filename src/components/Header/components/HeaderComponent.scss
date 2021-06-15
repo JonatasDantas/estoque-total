@@ -8,4 +8,36 @@
             height: 56px;
         }
     }
+
+}
+
+.user-menu-appbar {
+    .MuiMenu-paper {
+        margin: 30px 0px 0px -18px;
+
+        .MuiMenu-list {
+            .user-info {
+                .user-details {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 10px 0;
+                    margin: 0 60px 0 10px;
+
+                    span:first-child {
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .button-group {
+                display: flex;
+                justify-content: center;
+                margin: 15px 0 5px 0;
+
+                button {
+                    border-radius: 25px;
+                }
+            }
+        }
+    }
 }

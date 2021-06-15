@@ -29,7 +29,7 @@ const Itens = [
     route: '/relatorio-3',
   },
   {
-    name: 'Ajustes',
+    name: 'Configurações',
     icon: <Settings />,
     route: '/ajustes',
   },

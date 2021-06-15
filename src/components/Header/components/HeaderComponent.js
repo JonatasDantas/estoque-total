@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react';
+import { useHistory } from 'react-router';
 import { MobileView } from 'react-device-detect';
 import {
-  AppBar, IconButton, Menu, MenuItem, Toolbar,
+  AppBar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolbar,
 } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import { AccountCircle, Person, Settings } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import './HeaderComponent.scss';
@@ -12,13 +13,22 @@ import StoreContext from '../../../store/StoreContext';
 import Logo from '../../../assets/img/logo-transparente.png';
 
 function HeaderComponent() {
-  const { mobileOpen, setMobileOpen } = useContext(StoreContext);
+  const {
+    mobileOpen, setMobileOpen, setUser, setToken, user,
+  } = useContext(StoreContext);
   const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
   const open = Boolean(anchorEl);
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+
+  const handleLogout = () => {
+    setUser(null);
+    setToken(null);
+    history.replace('/');
+  };
 
   return (
     <AppBar position="sticky" color="primary">
@@ -46,6 +56,7 @@ function HeaderComponent() {
             <AccountCircle />
           </IconButton>
           <Menu
+            className="user-menu-appbar"
             id="menu-appbar"
             anchorEl={anchorEl}
             anchorOrigin={{
@@ -60,8 +71,32 @@ function HeaderComponent() {
             open={open}
             onClose={handleMenuClose}
           >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <div className="user-info">
+              <div className="user-details">
+                <span>{user.name}</span>
+                <span>{user.role && (user.role.find((e) => e.authority === 'ROLE_ADMIN') ? 'Administrador(a)' : 'Usuário')}</span>
+              </div>
+              <Divider />
+            </div>
+            <MenuItem onClick={handleMenuClose} style={{ marginTop: 10 }}>
+              <ListItemIcon>
+                <Person />
+              </ListItemIcon>
+              Minha Conta
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+              <ListItemIcon>
+                <Settings />
+              </ListItemIcon>
+              Configurações
+            </MenuItem>
+
+            <div className="button-group">
+              <Button variant="contained" color="primary" onClick={handleLogout}>
+                Logout
+              </Button>
+            </div>
+
           </Menu>
         </div>
       </Toolbar>
