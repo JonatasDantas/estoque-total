@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import {
   BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
@@ -13,12 +13,39 @@ import { Login } from './Login';
 import { StoreContext } from '../store';
 import { ChangePassword } from './ChangePassword';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { token, webOpen } = useContext(StoreContext);
+import { api } from '../services/api';
 
-  function isAuthenticated() {
-    return token;
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const { user, token, webOpen } = useContext(StoreContext);
+  const [authenticated, setAuthenticated] = useState(true);
+
+  api.interceptors.response.use(undefined, (err) => {
+    if ([401, 403].indexOf(err.response.status) !== -1 && !err.response.config.url.includes('auth')) {
+      console.log('unautorized!!');
+    }
+
+    return Promise.reject(err);
+  });
+
+  function handleUnauthorizedUser() {
+
   }
+
+  const isAuthenticated = () => authenticated && token && user;
+
+  async function getAuthentication() {
+    try {
+      console.log('runnign auth');
+      const { data } = await api.get('user/validate-token');
+      setAuthenticated(data);
+    } catch (error) {
+      setAuthenticated(false);
+    }
+  }
+
+  useEffect(() => {
+    getAuthentication();
+  }, []);
 
   return (
     <Route

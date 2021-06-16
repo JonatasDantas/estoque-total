@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import {
   Button, Card, CardContent, Checkbox, FormControlLabel, InputAdornment, TextField,
 } from '@material-ui/core';
@@ -9,6 +9,7 @@ import DataTable from '../../../components/DataTable/components/DataTable';
 import { api } from '../../../services/api';
 
 import './SecurityStock.scss';
+import StoreContext from '../../../store/StoreContext';
 
 const headers = [
   {
@@ -35,6 +36,7 @@ const headers = [
 ];
 
 function SecurityStock() {
+  const { user } = useContext(StoreContext);
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -50,7 +52,7 @@ function SecurityStock() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get('bling-products/safety-stock', {
+      const { data } = await api.get(`bling-products/${user.id}/safety-stock`, {
         params: {
           size: rowsPerPage,
           page: filtersChanged ? 0 : page,

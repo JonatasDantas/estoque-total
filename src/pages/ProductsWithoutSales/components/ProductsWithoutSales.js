@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Button,
   Card,
@@ -18,6 +18,7 @@ import { api } from '../../../services/api';
 
 import './ProductsWithoutSales.scss';
 import useDidMountEffect from '../../../utils/useDidMountEffect';
+import StoreContext from '../../../store/StoreContext';
 
 const headers = [
   {
@@ -41,6 +42,7 @@ const headers = [
 ];
 
 function ProductsWithoutSales() {
+  const { user } = useContext(StoreContext);
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -58,7 +60,7 @@ function ProductsWithoutSales() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get('bling-products/without-sales', {
+      const { data } = await api.get(`bling-products/${user.id}/without-sales`, {
         params: {
           size: rowsPerPage,
           page: filtersChanged ? 0 : page,
