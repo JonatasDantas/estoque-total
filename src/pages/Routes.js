@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import {
   BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { Header } from '../components/Header';
 import { Drawer } from '../components/Drawer';
 
@@ -16,20 +17,21 @@ import { ChangePassword } from './ChangePassword';
 import { api } from '../services/api';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
+  const history = useHistory();
   const { user, token, webOpen } = useContext(StoreContext);
   const [authenticated, setAuthenticated] = useState(true);
 
+  function handleUnauthorizedUser() {
+    history.replace('/');
+  }
+
   api.interceptors.response.use(undefined, (err) => {
     if ([401, 403].indexOf(err.response.status) !== -1 && !err.response.config.url.includes('auth')) {
-      console.log('unautorized!!');
+      handleUnauthorizedUser();
     }
 
     return Promise.reject(err);
   });
-
-  function handleUnauthorizedUser() {
-
-  }
 
   const isAuthenticated = () => authenticated && token && user;
 
