@@ -46,6 +46,7 @@ function SecurityStock() {
   const [loading, setLoading] = useState(false);
   const [nameQuery, setNameQuery] = useState('');
   const [codeQuery, setCodeQuery] = useState('');
+  const [supplierNameQuery, setSupplierNameQuery] = useState('');
   const [onlyRequired, setOnlyRequired] = useState(false);
   const [filtersChanged, setFiltersChanged] = useState(false);
 
@@ -59,6 +60,7 @@ function SecurityStock() {
           sort: `${orderBy},${order}`,
           code: codeQuery,
           name: nameQuery,
+          supplierName: supplierNameQuery,
           onlyRequired,
         },
       });
@@ -78,7 +80,7 @@ function SecurityStock() {
 
   useDidMountEffect(() => {
     setFiltersChanged(true);
-  }, [nameQuery, codeQuery, onlyRequired]);
+  }, [nameQuery, codeQuery, supplierNameQuery, onlyRequired]);
 
   useEffect(() => {
     fetchData();
@@ -125,6 +127,21 @@ function SecurityStock() {
               size="small"
               value={nameQuery}
               onChange={(e) => setNameQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <TextField
+              placeholder="Nome do fornecedor"
+              variant="outlined"
+              size="small"
+              value={supplierNameQuery}
+              onChange={(e) => setSupplierNameQuery(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
