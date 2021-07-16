@@ -37,6 +37,9 @@ const headers = [
     id: 'lastUpdateDate', numeric: false, disablePadding: false, label: 'Última atualização', align: 'center',
   },
   {
+    id: 'daysWithoutSale', numeric: true, disablePadding: false, label: 'Dias sem venda', align: 'center',
+  },
+  {
     id: 'actions', numeric: true, disablePadding: false, label: 'Ações', align: 'center',
   },
 ];
@@ -79,7 +82,14 @@ function ProductsWithoutSales() {
       }
 
       setTotalElements(data.totalElements);
-      setRows(data.content);
+      setRows(data.content.map((item) => {
+        // eslint-disable-next-line no-param-reassign
+        item.daysWithoutSale = Math.ceil(
+          (Date.parse(new Date()) - Date.parse(item.lastSaleDate)) / 86400000,
+        );
+
+        return item;
+      }));
       setLoading(false);
     } catch (err) {
       console.log(err);
