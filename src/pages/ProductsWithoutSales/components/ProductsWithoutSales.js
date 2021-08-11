@@ -12,7 +12,7 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+import { Search, Spellcheck, TrendingDown } from '@material-ui/icons';
 import DataTable from '../../../components/DataTable/components/DataTable';
 import { api } from '../../../services/api';
 
@@ -164,6 +164,39 @@ function ProductsWithoutSales() {
               }}
             />
 
+            <TextField
+              placeholder="Dias sem venda"
+              label="Dias sem venda"
+              variant="outlined"
+              disabled={noSales}
+              size="small"
+              value={daysWithoutSaleQuery}
+              onChange={(e) => setDaysWithoutSaleQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <TrendingDown />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <TextField
+              placeholder="Dias sem atualização"
+              label="Dias sem atualização"
+              variant="outlined"
+              size="small"
+              value={daysWithoutUpdateQuery}
+              onChange={(e) => setDaysWithoutUpdateQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Spellcheck />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {/*
             <FormControl size="small" className="select-control">
               <InputLabel id="nosales-label label">Dias sem venda</InputLabel>
               <Select
@@ -194,7 +227,7 @@ function ProductsWithoutSales() {
               >
                 {renderMenuItens()}
               </Select>
-            </FormControl>
+            </FormControl> */}
 
             <FormControlLabel
               control={<Checkbox checked={noSales} onChange={(e) => setNoSales(e.target.checked)} name="checkedA" />}
