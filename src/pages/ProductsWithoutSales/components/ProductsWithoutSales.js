@@ -57,6 +57,7 @@ function ProductsWithoutSales() {
   const [daysWithoutUpdateQuery, setDaysWithoutUpdateQuery] = useState(14);
   const [nameQuery, setNameQuery] = useState('');
   const [codeQuery, setCodeQuery] = useState('');
+  const [onlyComposed, setOnlyComposed] = useState(false);
   const [noSales, setNoSales] = useState(false);
   const [filtersChanged, setFiltersChanged] = useState(false);
 
@@ -73,6 +74,7 @@ function ProductsWithoutSales() {
           daysWithoutSale: daysWithoutSaleQuery,
           daysWithoutUpdate: daysWithoutUpdateQuery,
           noSales,
+          onlyComposed,
         },
       });
 
@@ -84,9 +86,9 @@ function ProductsWithoutSales() {
       setTotalElements(data.totalElements);
       setRows(data.content.map((item) => {
         // eslint-disable-next-line no-param-reassign
-        item.daysWithoutSale = Math.ceil(
+        item.daysWithoutSale = item.lastSaleDate ? Math.ceil(
           (Date.parse(new Date()) - Date.parse(item.lastSaleDate)) / 86400000,
-        );
+        ) : '';
 
         return item;
       }));
@@ -113,7 +115,7 @@ function ProductsWithoutSales() {
 
   useDidMountEffect(() => {
     setFiltersChanged(true);
-  }, [nameQuery, codeQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery, noSales]);
+  }, [nameQuery, codeQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery, noSales, onlyComposed]);
 
   useEffect(() => {
     fetchData();
@@ -232,6 +234,11 @@ function ProductsWithoutSales() {
             <FormControlLabel
               control={<Checkbox checked={noSales} onChange={(e) => setNoSales(e.target.checked)} name="checkedA" />}
               label="Produtos Sem venda"
+            />
+
+            <FormControlLabel
+              control={<Checkbox checked={onlyComposed} onChange={(e) => setOnlyComposed(e.target.checked)} name="checkedA" />}
+              label="Produtos compostos"
             />
 
             <div className="button-group end">

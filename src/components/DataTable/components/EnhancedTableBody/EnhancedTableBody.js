@@ -51,7 +51,7 @@ function EnhancedTableBody(props) {
                       onClick={(event) => handleClick(event, row.id)}
                     >
                       {
-                        key.indexOf('Date') !== -1 ? new Date(row[key]).toLocaleDateString() : row[key]
+                        key.indexOf('Date') !== -1 ? (row[key] ? new Date(row[key]).toLocaleDateString() : '') : row[key]
                       }
                     </TableCell>
                   ))
