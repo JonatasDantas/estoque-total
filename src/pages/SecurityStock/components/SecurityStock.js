@@ -31,6 +31,9 @@ const headers = [
     id: 'requiredItens', numeric: true, disablePadding: false, label: 'Quantidade a solicitar', align: 'center',
   },
   {
+    id: 'observations', numeric: false, disablePadding: false, label: 'Observações', align: 'center',
+  },
+  {
     id: 'actions', numeric: true, disablePadding: false, label: 'Ações', align: 'center',
   },
 ];

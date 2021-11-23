@@ -37,6 +37,9 @@ const headers = [
     id: 'lastUpdateDate', numeric: false, disablePadding: false, label: 'Última atualização', align: 'center',
   },
   {
+    id: 'observations', numeric: false, disablePadding: false, label: 'Observações', align: 'center',
+  },
+  {
     id: 'daysWithoutSale', numeric: true, disablePadding: false, label: 'Dias sem venda', align: 'center',
   },
   {
@@ -57,7 +60,8 @@ function ProductsWithoutSales() {
   const [daysWithoutUpdateQuery, setDaysWithoutUpdateQuery] = useState(14);
   const [nameQuery, setNameQuery] = useState('');
   const [codeQuery, setCodeQuery] = useState('');
-  const [onlyComposed, setOnlyComposed] = useState(false);
+  const [onlyNotComposed, setOnlyNotComposed] = useState(false);
+  const [onlyWithObservations, setOnlyWithObservations] = useState(false);
   const [noSales, setNoSales] = useState(false);
   const [filtersChanged, setFiltersChanged] = useState(false);
 
@@ -74,7 +78,8 @@ function ProductsWithoutSales() {
           daysWithoutSale: daysWithoutSaleQuery,
           daysWithoutUpdate: daysWithoutUpdateQuery,
           noSales,
-          onlyComposed,
+          onlyNotComposed,
+          onlyWithObservations,
         },
       });
 
@@ -115,7 +120,15 @@ function ProductsWithoutSales() {
 
   useDidMountEffect(() => {
     setFiltersChanged(true);
-  }, [nameQuery, codeQuery, daysWithoutSaleQuery, daysWithoutUpdateQuery, noSales, onlyComposed]);
+  }, [
+    nameQuery,
+    codeQuery,
+    daysWithoutSaleQuery,
+    daysWithoutUpdateQuery,
+    noSales,
+    onlyNotComposed,
+    onlyWithObservations,
+  ]);
 
   useEffect(() => {
     fetchData();
@@ -237,8 +250,13 @@ function ProductsWithoutSales() {
             />
 
             <FormControlLabel
-              control={<Checkbox checked={onlyComposed} onChange={(e) => setOnlyComposed(e.target.checked)} name="checkedA" />}
-              label="Produtos compostos"
+              control={<Checkbox checked={onlyNotComposed} onChange={(e) => setOnlyNotComposed(e.target.checked)} name="checkedA" />}
+              label="Produtos não compostos"
+            />
+
+            <FormControlLabel
+              control={<Checkbox checked={onlyWithObservations} onChange={(e) => setOnlyWithObservations(e.target.checked)} name="checkedA" />}
+              label="Somente com observações"
             />
 
             <div className="button-group end">
