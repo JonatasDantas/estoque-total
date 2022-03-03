@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   InputAdornment,
   InputLabel,
+  ListItemText,
   MenuItem,
   Select,
   TextField,
@@ -60,10 +61,12 @@ function ProductsWithoutSales() {
   const [daysWithoutUpdateQuery, setDaysWithoutUpdateQuery] = useState(14);
   const [nameQuery, setNameQuery] = useState('');
   const [codeQuery, setCodeQuery] = useState('');
+  const [observationTypeQuery, setObservationTypeQuery] = useState([]);
   const [onlyNotComposed, setOnlyNotComposed] = useState(false);
   const [onlyWithObservations, setOnlyWithObservations] = useState(false);
   const [noSales, setNoSales] = useState(false);
   const [filtersChanged, setFiltersChanged] = useState(false);
+  const [observationsTypes, setObservationsTypes] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -77,6 +80,7 @@ function ProductsWithoutSales() {
           name: nameQuery,
           daysWithoutSale: daysWithoutSaleQuery,
           daysWithoutUpdate: daysWithoutUpdateQuery,
+          observationsContains: observationTypeQuery.join(','),
           noSales,
           onlyNotComposed,
           onlyWithObservations,
@@ -101,6 +105,12 @@ function ProductsWithoutSales() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const fetchObservationTypes = async () => {
+    const { data } = await api.get('bling-products/get-possible-observations');
+
+    setObservationsTypes(data.filter((e) => e !== null && e !== ''));
   };
 
   const updateItem = async (products) => {
@@ -128,6 +138,7 @@ function ProductsWithoutSales() {
     noSales,
     onlyNotComposed,
     onlyWithObservations,
+    observationTypeQuery,
   ]);
 
   useEffect(() => {
@@ -143,6 +154,10 @@ function ProductsWithoutSales() {
 
     return itens;
   };
+
+  useEffect(() => {
+    fetchObservationTypes();
+  }, []);
 
   return (
     <div>
@@ -211,6 +226,32 @@ function ProductsWithoutSales() {
                 ),
               }}
             />
+
+            <FormControl size="small" className="select-control">
+              <InputLabel id="observations-label label">Tipo</InputLabel>
+              <Select
+                labelId="observations-label"
+                label="Tipo"
+                className="observations-select"
+                id="observations"
+                name="observations"
+                variant="outlined"
+                value={observationTypeQuery}
+                multiple
+                onChange={(e) => setObservationTypeQuery(e.target.value)}
+                renderValue={(selected) => selected.join(', ')}
+              >
+                {/* {observationsTypes} */}
+
+                {observationsTypes.map((type) => (
+                  <MenuItem key={type} value={type}>
+                    <Checkbox checked={observationTypeQuery.indexOf(type) > -1} />
+                    <ListItemText primary={type} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             {/*
             <FormControl size="small" className="select-control">
               <InputLabel id="nosales-label label">Dias sem venda</InputLabel>
@@ -244,20 +285,22 @@ function ProductsWithoutSales() {
               </Select>
             </FormControl> */}
 
-            <FormControlLabel
-              control={<Checkbox checked={noSales} onChange={(e) => setNoSales(e.target.checked)} name="checkedA" />}
-              label="Produtos Sem venda"
-            />
+            <div className="checkboxes" style={{ margin: '1rem' }}>
+              <FormControlLabel
+                control={<Checkbox checked={noSales} onChange={(e) => setNoSales(e.target.checked)} name="checkedA" />}
+                label="Produtos Sem venda"
+              />
 
-            <FormControlLabel
-              control={<Checkbox checked={onlyNotComposed} onChange={(e) => setOnlyNotComposed(e.target.checked)} name="checkedA" />}
-              label="Produtos não compostos"
-            />
+              <FormControlLabel
+                control={<Checkbox checked={onlyNotComposed} onChange={(e) => setOnlyNotComposed(e.target.checked)} name="checkedA" />}
+                label="Produtos não compostos"
+              />
 
-            <FormControlLabel
-              control={<Checkbox checked={onlyWithObservations} onChange={(e) => setOnlyWithObservations(e.target.checked)} name="checkedA" />}
-              label="Somente com observações"
-            />
+              <FormControlLabel
+                control={<Checkbox checked={onlyWithObservations} onChange={(e) => setOnlyWithObservations(e.target.checked)} name="checkedA" />}
+                label="Somente com observações"
+              />
+            </div>
 
             <div className="button-group end">
               <Button variant="contained" size="large" type="submit">
