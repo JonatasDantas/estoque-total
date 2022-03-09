@@ -1,0 +1,101 @@
+.login {
+    height: 100%;
+    width: 100%;
+    background-color: #1b224d;
+
+    .login-card {
+        position: absolute;
+        top: 15%;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 460px;
+        z-index: 1;
+
+        .app-logo {
+            display: flex;
+            justify-content: center;
+
+            img {
+                width: 60%;
+            }
+        }
+
+        .card-views {
+                .MuiBox-root {
+                    padding: 24px 10px;
+                }
+        }
+
+        .MuiCardActions-root {
+            background-color: #cccccc;
+            justify-content: center;
+        }
+
+        @media screen and (max-width: 768px) {
+            width: 90vw;
+        }
+
+        .login-form {
+            .MuiTextField-root {
+                margin: 0 0 15px 0;
+            }
+        }
+
+        .signup-form {
+            .MuiTextField-root:not(.phone-texfield) {
+                margin: 0 0 15px 0;
+            }
+        
+            .row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 15px;
+        
+                #gender-label {
+                    top: -8px;
+                    left: 14px;
+                }
+        
+                .MuiFormHelperText-root {
+                    margin-top: 4px;
+                    margin-left: 12px;
+                    color: red;
+                }
+            }
+        
+            .button-group {
+                display: flex;
+                justify-content: center;
+                margin-top: 10px;
+        
+                button {
+                    background-color: #56ccf2 !important;
+                    color: #FFFFFF;
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
+
+    #tsparticles {
+        height: 100vh;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+
+        button {
+            background-color: #56ccf2 !important;
+            color: #FFFFFF;
+            border-radius: 20px;
+        }
+
+        &.end {
+            justify-content: flex-end;
+            margin-top: 0;
+        }
+    }
+}

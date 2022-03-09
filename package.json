@@ -1,0 +1,48 @@
+{
+  "name": "estoque-total",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@material-ui/styles": "^4.11.4",
+    "axios": "^0.26.0",
+    "formik": "^2.2.9",
+    "next": "12.1.0",
+    "nookies": "^2.5.2",
+    "react": "17.0.2",
+    "react-device-detect": "^2.1.2",
+    "react-dom": "17.0.2",
+    "react-input-mask": "^3.0.0-alpha.2",
+    "react-swipeable-views": "^0.14.0",
+    "react-tsparticles": "^1.41.6",
+    "sass": "^1.49.9",
+    "tsparticles": "^1.41.6",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.21",
+    "@types/react": "17.0.39",
+    "@types/react-input-mask": "^3.0.1",
+    "@types/react-swipeable-views": "^0.13.1",
+    "@types/yup": "^0.29.13",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-next": "12.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "typescript": "4.5.5"
+  }
+}
