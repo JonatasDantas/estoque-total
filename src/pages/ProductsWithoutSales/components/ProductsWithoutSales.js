@@ -26,19 +26,19 @@ const headers = [
     id: 'codigo', numeric: false, disablePadding: true, label: 'Código', align: 'left',
   },
   {
-    id: 'name', numeric: false, disablePadding: true, label: 'Descriçao do Produto', align: 'left',
-  },
-  {
-    id: 'quantityStored', numeric: true, disablePadding: false, label: 'Quantidade em Estoque', align: 'center',
-  },
-  {
     id: 'lastSaleDate', numeric: false, disablePadding: false, label: 'Última venda', align: 'center',
   },
   {
     id: 'lastUpdateDate', numeric: false, disablePadding: false, label: 'Última atualização', align: 'center',
   },
   {
+    id: 'name', numeric: false, disablePadding: true, label: 'Descriçao do Produto', align: 'left',
+  },
+  {
     id: 'observations', numeric: false, disablePadding: false, label: 'Observações', align: 'center',
+  },
+  {
+    id: 'quantityStored', numeric: true, disablePadding: false, label: 'Quantidade em Estoque', align: 'center',
   },
   {
     id: 'daysWithoutSale', numeric: true, disablePadding: false, label: 'Dias sem venda', align: 'center',
@@ -71,7 +71,7 @@ function ProductsWithoutSales() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get(`bling-products/${user.id}/without-sales`, {
+      const { data } = await api.get('bling-products/without-sales', {
         params: {
           size: rowsPerPage,
           page: filtersChanged ? 0 : page,

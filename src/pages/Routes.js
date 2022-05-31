@@ -38,7 +38,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   async function getAuthentication() {
     try {
       console.log('runnign auth');
-      const { data } = await api.get('user/validate-token');
+      const { data } = await api.get('users/validate-token');
       setAuthenticated(data);
     } catch (error) {
       setAuthenticated(false);

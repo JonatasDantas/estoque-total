@@ -56,7 +56,7 @@ function SecurityStock() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get(`bling-products/${user.id}/safety-stock`, {
+      const { data } = await api.get('bling-products/safety-stock', {
         params: {
           size: rowsPerPage,
           page: filtersChanged ? 0 : page,

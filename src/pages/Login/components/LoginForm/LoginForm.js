@@ -33,10 +33,10 @@ function LoginForm() {
       setIsLoading(true);
       const { data } = await api.post('auth/login', { ...credentials });
 
-      if (data.token && data.user) {
+      if (data.accessToken && data.user) {
         setUser(data.user);
-        setToken(data.token);
-        setAuthorization(data.token);
+        setToken(data.accessToken);
+        setAuthorization(data.accessToken);
         setIsLoading(false);
 
         history.replace('/home');
