@@ -26,6 +26,12 @@ function DataTable(props) {
     setOrderBy,
     handleUpdateItem,
     loading,
+    hideUpdateAction,
+    hideEditAction,
+    hideDeleteAction,
+    handleDeleteClick,
+    handleEditClick,
+    selectableRecords = true,
   } = props;
 
   const [selected, setSelected] = useState([]);
@@ -135,7 +141,8 @@ function DataTable(props) {
             >
               <EnhancedTableHead
                 cells={headers}
-                onSelectAllClick={handleSelectAllClick}
+                selectableRecords={selectableRecords}
+                onSelectAllClick={selectableRecords ? handleSelectAllClick : null}
                 order={order}
                 orderBy={orderBy}
                 numSelected={selected.length}
@@ -143,13 +150,20 @@ function DataTable(props) {
                 rowCount={rows.length}
               />
               <EnhancedTableBody
+                headers={headers}
                 rows={rows}
                 page={0}
                 rowsPerPage={rowsPerPage}
                 selected={selected}
-                handleClick={handleClick}
+                handleClick={selectableRecords ? handleClick : null}
+                selectableRecords={selectableRecords}
                 handleUpdatedClick={handleUpdatedClick}
+                handleEditClick={handleEditClick}
+                handleDeleteClick={handleDeleteClick}
                 loading={loading}
+                hideUpdateAction={hideUpdateAction}
+                hideEditAction={hideEditAction}
+                hideDeleteAction={hideDeleteAction}
               />
             </Table>
           </TableContainer>

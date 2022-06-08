@@ -40,7 +40,7 @@ function DrawerComponent() {
       <div className="user-info">
         <Avatar>{user.name.charAt(0)}</Avatar>
         <Typography className="username" variant="h6">{(webOpen || mobileOpen) && user.name}</Typography>
-        <Typography variant="body2">{user.role && (webOpen || mobileOpen) && (user.role.find((e) => e.authority === 'ROLE_ADMIN') ? 'Administrador(a)' : 'Usuário')}</Typography>
+        <Typography variant="body2">{user.roles && (webOpen || mobileOpen) && (user.roles[0].description ?? 'Usuário(a)')}</Typography>
       </div>
       <Divider />
       <List className="drawer-container">

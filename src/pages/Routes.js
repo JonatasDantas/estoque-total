@@ -10,6 +10,7 @@ import { Dashboard } from './Dashboard';
 import { ProductsWithoutSales } from './ProductsWithoutSales';
 import { SecurityStock } from './SecurityStock';
 import { Login } from './Login';
+import { Settings } from './Settings';
 
 import { StoreContext } from '../store';
 import { ChangePassword } from './ChangePassword';
@@ -75,6 +76,7 @@ const Routes = () => (
       <PrivateRoute path="/home" component={() => <Dashboard />} />
       <PrivateRoute path="/relatorios/produtos-sem-vendas" component={() => <ProductsWithoutSales />} />
       <PrivateRoute path="/relatorios/estoque-de-segunca" component={() => <SecurityStock />} />
+      <PrivateRoute path="/configuracoes" component={() => <Settings />} />
       <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>

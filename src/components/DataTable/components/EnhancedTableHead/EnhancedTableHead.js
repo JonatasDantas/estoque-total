@@ -11,6 +11,7 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
+    selectableRecords,
   } = props;
   const createSortHandler = (property) => (event) => {
     if (property !== 'actions') {
@@ -21,19 +22,24 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
+        {
+            selectableRecords
+            && (
+            <TableCell padding="checkbox">
+              <Checkbox
+                indeterminate={numSelected > 0 && numSelected < rowCount}
+                checked={rowCount > 0 && numSelected === rowCount}
+                onChange={onSelectAllClick}
+                inputProps={{ 'aria-label': 'select all' }}
+              />
+            </TableCell>
+            )
+          }
         {cells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={headCell.align}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding="default"
             sortDirection={orderBy === headCell.id ? order : false}
             style={{ whiteSpace: 'nowrap' }}
           >

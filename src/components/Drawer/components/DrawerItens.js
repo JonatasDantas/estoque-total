@@ -31,7 +31,7 @@ const Itens = [
   {
     name: 'Configurações',
     icon: <Settings />,
-    route: '/ajustes',
+    route: '/configuracoes',
   },
 ];
 
