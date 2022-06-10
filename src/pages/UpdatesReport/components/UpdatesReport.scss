@@ -1,0 +1,14 @@
+.update-report {
+  .report-form {
+    .react-daterange-picker {
+      .react-daterange-picker__wrapper {
+        padding: 6px;
+        border-radius: 20px;
+      }
+
+      .react-calendar {
+        position: fixed;
+      }
+    }
+  }
+}

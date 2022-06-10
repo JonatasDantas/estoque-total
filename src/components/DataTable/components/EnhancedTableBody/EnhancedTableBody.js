@@ -66,7 +66,7 @@ function EnhancedTableBody(props) {
                     <TableCell
                       key={key}
                       align={['codigo', 'name', 'supplierName'].indexOf(key) !== -1 ? 'left' : 'center'}
-                      padding={['name', 'supplierName'].indexOf(key) !== -1 ? 'default' : 'none'}
+                      // padding={['name', 'supplierName'].indexOf(key) !== -1 ? 'default' : 'none'}
                       style={{ whiteSpace: 'nowrap' }}
                       onClick={(event) => selectableRecords && handleClick(event, row.id)}
                     >

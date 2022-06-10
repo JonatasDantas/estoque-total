@@ -44,12 +44,18 @@ function DrawerComponent() {
       </div>
       <Divider />
       <List className="drawer-container">
-        {Itens.map((item) => (
-          <ListItem button key={item.route} onClick={() => handleRouteClick(item.route)}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={(webOpen || mobileOpen) && item.name} />
-          </ListItem>
-        ))}
+        {Itens.map((item) => {
+          if ((item.onlyManager && ['ROLE_COMPANY_MANAGER', 'ROLE_ADMIN'].includes(user.roles[0].name)) || !item.onlyManager) {
+            return (
+              <ListItem button key={item.route} onClick={() => handleRouteClick(item.route)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={(webOpen || mobileOpen) && item.name} />
+              </ListItem>
+            );
+          }
+
+          return null;
+        })}
       </List>
     </div>
   );

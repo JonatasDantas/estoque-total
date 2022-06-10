@@ -19,15 +19,16 @@ const Itens = [
     route: '/relatorios/estoque-de-segunca',
   },
   {
-    name: 'Relatório 2',
+    name: 'Relatório de atualicações',
     icon: <TrendingUp />,
-    route: '/relatorio-2',
+    route: '/relatorios/atualizacoes',
+    onlyManager: true,
   },
-  {
-    name: 'Relatório 3',
-    icon: <PieChart />,
-    route: '/relatorio-3',
-  },
+  // {
+  //   name: 'Relatório 3',
+  //   icon: <PieChart />,
+  //   route: '/relatorio-3',
+  // },
   {
     name: 'Configurações',
     icon: <Settings />,

@@ -16,6 +16,7 @@ import { StoreContext } from '../store';
 import { ChangePassword } from './ChangePassword';
 
 import { api } from '../services/api';
+import { UpdatesReport } from './UpdatesReport/components/UpdatesReport';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const history = useHistory();
@@ -76,6 +77,7 @@ const Routes = () => (
       <PrivateRoute path="/home" component={() => <Dashboard />} />
       <PrivateRoute path="/relatorios/produtos-sem-vendas" component={() => <ProductsWithoutSales />} />
       <PrivateRoute path="/relatorios/estoque-de-segunca" component={() => <SecurityStock />} />
+      <PrivateRoute path="/relatorios/atualizacoes" component={() => <UpdatesReport />} />
       <PrivateRoute path="/configuracoes" component={() => <Settings />} />
       <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
