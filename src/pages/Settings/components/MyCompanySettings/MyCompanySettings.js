@@ -4,7 +4,7 @@ import {
 import { Close } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { api } from '../../../../services/api';
 
@@ -24,7 +24,7 @@ export function MyCompanySettings() {
 
   async function handleSubmit(companyData) {
     try {
-      const { data } = await api.put('company', { ...companyData });
+      const { data } = await api.put('company/my-company', { ...companyData });
 
       console.log(`update company response ${data}`);
       setalertMessage('Dados da empresa alterados com sucesso! \n');
@@ -49,8 +49,31 @@ export function MyCompanySettings() {
     },
   });
 
+  async function fetchData() {
+    try {
+      const { data } = await api.get('company/my-company');
+
+      formik.setFieldValue('name', data.name || '');
+      formik.setFieldValue('blingKey', data.blingKey || '');
+    } catch (err) {
+      setalertMessage(err.message ? err.message : 'Erro na busca dos dados!');
+      setAlertSuccess(false);
+      setAlertOpen(true);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <form className="update-company-form" onSubmit={formik.handleSubmit}>
+    <form
+      className="update-company-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(formik.values);
+      }}
+    >
       <Collapse in={alertOpen}>
         <Alert
           style={{ marginBottom: 20 }}
@@ -94,6 +117,7 @@ export function MyCompanySettings() {
         onChange={formik.handleChange}
         error={formik.touched.blingKey && Boolean(formik.errors.blingKey)}
         helperText={formik.touched.blingKey && formik.errors.blingKey}
+        disabled
       />
 
       <div className="button-group">

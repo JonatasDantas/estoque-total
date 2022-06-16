@@ -78,13 +78,13 @@ function HeaderComponent() {
               </div>
               <Divider />
             </div>
-            <MenuItem onClick={handleMenuClose} style={{ marginTop: 10 }}>
+            {/* <MenuItem onClick={handleMenuClose} style={{ marginTop: 10 }}>
               <ListItemIcon>
                 <Person />
               </ListItemIcon>
               Minha Conta
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
+            </MenuItem> */}
+            <MenuItem onClick={() => history.push('/configuracoes')}>
               <ListItemIcon>
                 <Settings />
               </ListItemIcon>

@@ -1,3 +1,19 @@
-.app {
+.dashboard-container {
+  padding: 12px;
 
+  .no-sales-card {
+    .MuiPaper-root {
+      display: inline-flex;
+      flex-direction: column;
+
+      .MuiCardHeader-root {
+        padding: 12px 40px;
+
+        span {
+          font-size: 1.3rem;
+          font-weight: 500;
+        }
+      }
+    }
+  }
 }
